@@ -13,7 +13,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
         :root { --nine-works-blue: #0054a6; }
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1d1d1f; margin: 0; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1d1d1f; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
         
         /* BIG LOGO LOADER */
         #loader {
@@ -35,11 +35,9 @@
             aspect-ratio: 2/3;
         }
         .poster-frame img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* HERO - SLIGHTLY BIGGER */
         .hero-poster-frame { max-width: 480px; transform: scale(1.05); }
 
-        /* TEAM PHOTO CONSISTENCY */
+        /* TEAM PHOTO REFINEMENT */
         .team-circle {
             width: 8rem; height: 8rem; margin: 0 auto 1.5rem;
             border-radius: 9999px; overflow: hidden; background: #f1f5f9;
@@ -53,6 +51,7 @@
         }
         .team-circle:hover img { filter: grayscale(0%) contrast(100%); }
 
+        /* STICKY ELEMENTS */
         #sticky-header { transition: transform 0.4s ease; transform: translateY(-100%); background: white; border-bottom: 1px solid #eee; z-index: 100; }
         #sticky-header.visible { transform: translateY(0); }
 
@@ -63,6 +62,22 @@
             backdrop-filter: blur(10px); border: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
+
+        /* BACK TO TOP BUTTON */
+        #back-to-top {
+            position: fixed; bottom: 2.2rem; right: 2rem;
+            width: 3.5rem; height: 3.5rem;
+            background: var(--nine-works-blue);
+            color: white; border-radius: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 100;
+            opacity: 0; transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0, 84, 166, 0.3);
+        }
+        #back-to-top.visible { opacity: 1; transform: translateY(0); }
+        #back-to-top:hover { background: #004080; transform: scale(1.1); }
+        .triangle-up { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 14px solid white; }
     </style>
 </head>
 <body>
@@ -70,6 +85,10 @@
     <div id="loader">
         <img src="https://drive.google.com/thumbnail?id=1P6GlMPvfrKxeZdelIfjHhY378yYHA9bz&sz=w600" class="loader-logo">
         <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
+    </div>
+
+    <div id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <div class="triangle-up"></div>
     </div>
 
     <header id="sticky-header" class="fixed top-0 left-0 w-full p-4 pointer-events-none">
@@ -143,7 +162,7 @@
                         <p class="text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest mt-2">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
                     </div>`).join('');
 
-                // Past Shows (Centered Grid)
+                // Past Shows
                 document.getElementById('archive-grid').innerHTML = shows.filter(s => getVal(s, 'Type').toLowerCase().includes('past')).map(s => `
                     <div class="text-center" data-aos="fade-up">
                         <div class="poster-frame mb-6"><img src="${getVal(s, 'Poster')}" loading="lazy"></div>
@@ -169,7 +188,9 @@
                 }, 400);
 
                 window.addEventListener('scroll', () => {
-                    document.getElementById('sticky-header').classList.toggle('visible', window.scrollY > 400);
+                    const scrollPos = window.scrollY;
+                    document.getElementById('sticky-header').classList.toggle('visible', scrollPos > 400);
+                    document.getElementById('back-to-top').classList.toggle('visible', scrollPos > 800);
                 });
 
             } catch (err) { console.error(err); }
