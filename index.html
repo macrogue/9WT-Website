@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9 Works Theatrical | Manila's Premiere Theatre Company</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        :root { --nine-works-blue: #0054a6; }
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1d1d1f; margin: 0; overflow-x: hidden; }
+        
+        /* BIG LOGO LOADER */
+        #loader {
+            position: fixed; inset: 0; background: white; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease;
+        }
+        .loader-logo { width: 240px; margin-bottom: 2rem; animation: pulse 2s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.05); opacity: 0.7; } }
+
+        .progress-container { width: 220px; height: 4px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: var(--nine-works-blue); transition: width 0.4s ease; }
+
+        /* POSTER FRAMES */
+        .poster-frame { 
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); 
+            border-radius: 2rem; overflow: hidden; 
+            background: #f8fafc; display: flex; align-items: center; justify-content: center;
+            aspect-ratio: 2/3;
+        }
+        .poster-frame img { width: 100%; height: 100%; object-fit: contain; }
+
+        /* HERO - SLIGHTLY BIGGER */
+        .hero-poster-frame { max-width: 480px; transform: scale(1.05); }
+
+        /* TEAM PHOTO CONSISTENCY */
+        .team-circle {
+            width: 8rem; height: 8rem; margin: 0 auto 1.5rem;
+            border-radius: 9999px; overflow: hidden; background: #f1f5f9;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        @media (min-width: 768px) { .team-circle { width: 13rem; height: 13rem; } }
+        .team-circle img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            object-position: center 20%; filter: grayscale(100%) contrast(110%);
+            transition: all 0.5s ease;
+        }
+        .team-circle:hover img { filter: grayscale(0%) contrast(100%); }
+
+        #sticky-header { transition: transform 0.4s ease; transform: translateY(-100%); background: white; border-bottom: 1px solid #eee; z-index: 100; }
+        #sticky-header.visible { transform: translateY(0); }
+
+        .social-tray {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            z-index: 90; display: flex; gap: 1.5rem; padding: 1rem 2rem;
+            border-radius: 9999px; background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px); border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <img src="https://drive.google.com/thumbnail?id=1P6GlMPvfrKxeZdelIfjHhY378yYHA9bz&sz=w600" class="loader-logo">
+        <div class="progress-container"><div id="progress-bar" class="progress-bar"></div></div>
+    </div>
+
+    <header id="sticky-header" class="fixed top-0 left-0 w-full p-4 pointer-events-none">
+        <div class="max-w-7xl mx-auto flex justify-center">
+            <img src="https://drive.google.com/thumbnail?id=1P6GlMPvfrKxeZdelIfjHhY378yYHA9bz&sz=w200" class="w-16 pointer-events-auto cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        </div>
+    </header>
+
+    <main id="main-content" class="opacity-0 transition-opacity duration-700">
+        <section class="flex flex-col items-center justify-center text-center px-6 pt-32 pb-20 min-h-screen">
+            <div data-aos="fade-down" class="mb-10"><span class="px-8 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-sm font-black uppercase border border-blue-100 tracking-widest">Now Playing</span></div>
+            <div class="poster-frame w-full hero-poster-frame mb-12" data-aos="zoom-in"><img id="hero-img" src=""></div>
+            <div class="max-w-4xl" data-aos="fade-up">
+                <h1 id="hero-title" class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-10 text-zinc-900 leading-tight"></h1>
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <a href="https://ticket2me.net" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl hover:scale-105 transition-transform">Buy Tickets</a>
+                    <a href="mailto:info@9workstheatrical.com" class="bg-white text-zinc-900 px-14 py-5 rounded-full font-bold text-xl border border-zinc-200">Buy a Show</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Coming Soon</h2>
+            <div id="coming-soon-grid" class="flex flex-wrap justify-center gap-x-10 gap-y-16"></div>
+        </section>
+
+        <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Past Shows</h2>
+            <div id="archive-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16"></div>
+        </section>
+
+        <section class="py-32 bg-zinc-50 px-6 mb-40">
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-20">The Team</h2>
+            <div id="team-grid" class="flex flex-wrap justify-center gap-x-12 gap-y-16 max-w-7xl mx-auto"></div>
+        </section>
+    </main>
+
+    <div class="social-tray">
+        <a href="https://facebook.com/9workstheatrical" target="_blank" class="text-xl text-[var(--nine-works-blue)]"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://instagram.com/9workstheatrical" target="_blank" class="text-xl text-[var(--nine-works-blue)]"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://threads.net/@9workstheatrical" target="_blank" class="text-xl text-[var(--nine-works-blue)]"><i class="fa-brands fa-threads"></i></a>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxqLYJf6NWT3uHYHKNW18qTeC2llRZrxpQv2-MpKGizMGfeFWagzGMD-NAaOU4VdB9j/exec';
+        const progressBar = document.getElementById('progress-bar');
+
+        function getVal(obj, keyName) {
+            const foundKey = Object.keys(obj || {}).find(k => k.trim().toLowerCase() === keyName.toLowerCase());
+            return foundKey ? String(obj[foundKey]).trim() : "";
+        }
+
+        async function init() {
+            try {
+                progressBar.style.width = "30%";
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                progressBar.style.width = "100%";
+                
+                const shows = data.shows || [];
+                const current = shows.find(s => getVal(s, 'Type').toLowerCase().includes('current')) || shows[0];
+
+                document.getElementById('hero-title').innerText = getVal(current, 'Title');
+                document.getElementById('hero-img').src = getVal(current, 'Poster');
+
+                // Coming Soon (Centered Flex)
+                document.getElementById('coming-soon-grid').innerHTML = shows.filter(s => getVal(s, 'Type').toLowerCase().includes('coming')).map(s => `
+                    <div class="text-center w-[calc(50%-1.5rem)] md:w-[calc(25%-3rem)]" data-aos="fade-up">
+                        <div class="poster-frame mb-6"><img src="${getVal(s, 'Poster')}" loading="lazy"></div>
+                        <h4 class="font-bold text-xl leading-tight">${getVal(s, 'Title')}</h4>
+                        <p class="text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest mt-2">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
+                    </div>`).join('');
+
+                // Past Shows (Centered Grid)
+                document.getElementById('archive-grid').innerHTML = shows.filter(s => getVal(s, 'Type').toLowerCase().includes('past')).map(s => `
+                    <div class="text-center" data-aos="fade-up">
+                        <div class="poster-frame mb-6"><img src="${getVal(s, 'Poster')}" loading="lazy"></div>
+                        <h4 class="font-bold text-xl leading-tight">${getVal(s, 'Title')}</h4>
+                        <p class="text-zinc-400 text-xs font-bold uppercase tracking-widest mt-2">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
+                    </div>`).join('');
+
+                // Team (Centered Flex)
+                document.getElementById('team-grid').innerHTML = (data.team || []).map(p => `
+                    <div class="text-center w-[calc(50%-1.5rem)] md:w-[calc(25%-3rem)]" data-aos="fade-up">
+                        <div class="team-circle"><img src="${getVal(p, 'Photo')}" loading="lazy"></div>
+                        <h4 class="font-bold text-xl leading-tight">${getVal(p, 'Name')}</h4>
+                        <p class="text-[var(--nine-works-blue)] text-[10px] font-black uppercase tracking-widest mt-2">${getVal(p, 'Role')}</p>
+                    </div>`).join('');
+
+                setTimeout(() => {
+                    document.getElementById('loader').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('main-content').classList.remove('opacity-0');
+                        AOS.init({ once: true, duration: 800 });
+                    }, 600);
+                }, 400);
+
+                window.addEventListener('scroll', () => {
+                    document.getElementById('sticky-header').classList.toggle('visible', window.scrollY > 400);
+                });
+
+            } catch (err) { console.error(err); }
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>
