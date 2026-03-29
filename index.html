@@ -24,48 +24,48 @@
         /* POSTERS */
         .poster-frame { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); border-radius: 2rem; overflow: hidden; background: #f8fafc; aspect-ratio: 2/3; margin: 0 auto; }
         .poster-frame img { width: 100%; height: 100%; object-fit: contain; }
-        .hero-poster { max-width: 480px; width: 100%; }
-        .coming-poster { max-width: 380px; width: 100%; }
-        .past-poster { max-width: 280px; width: 100%; }
 
-        /* DESCRIPTION */
+        /* DESCRIPTIONS */
         .show-description { 
             max-width: 700px; margin: 2rem auto; font-size: 1.15rem; line-height: 1.8; 
-            color: #4b5563; opacity: 0; transform: translateY(20px); 
-            transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1) 0.6s; 
+            color: #4b5563; 
         }
-        .aos-animate .show-description { opacity: 1; transform: translateY(0); }
 
-        /* THE TEAM - ULTIMATE CENTERING & MOBILE FIX */
+        /* THE TEAM - ULTIMATE CENTERING & IPHONE FIX */
         .team-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
+            gap: 4rem 2rem; max-width: 1200px; margin: 0 auto;
         }
         .team-member {
-            width: 100%; /* Default mobile behavior */
-            max-width: 280px;
-            text-align: center;
+            width: 100%; max-width: 280px; display: flex; flex-direction: column;
+            align-items: center; text-align: center;
         }
         @media (min-width: 768px) {
-            .team-member { width: calc(25% - 2rem); } /* 4 per row on desktop */
+            .team-member { width: calc(25% - 2rem); }
         }
         .team-circle { 
-            width: 12rem; height: 12rem; margin: 0 auto 1.5rem; border-radius: 50%; 
+            width: 12rem; height: 12rem; margin-bottom: 1.5rem; border-radius: 50%; 
             overflow: hidden; background: #f8fafc; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
             display: flex; align-items: center; justify-content: center;
         }
         .team-circle img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            object-position: center 12%; /* Optimized for Robbie/Toff portraits */
-            filter: grayscale(100%); transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); 
+            width: 100%; height: 100%; object-fit: cover; 
+            object-position: center 12%; 
+            filter: grayscale(100%); transition: 0.6s ease; 
         }
         .team-circle:hover img { filter: grayscale(0%); transform: scale(1.08); }
+
+        /* INVERTED V BACK TO TOP */
+        #back-to-top { 
+            position: fixed; bottom: 3rem; right: 2.5rem; 
+            width: 25px; height: 25px; 
+            border-left: 4px solid var(--nine-works-blue);
+            border-top: 4px solid var(--nine-works-blue);
+            transform: rotate(45deg);
+            cursor: pointer; opacity: 0; visibility: hidden; transition: 0.4s; z-index: 90;
+        }
+        #back-to-top.visible { opacity: 0.6; visibility: visible; }
+        #back-to-top:hover { opacity: 1; transform: rotate(45deg) scale(1.15); }
 
         /* LIQUID GLASS SOCIAL DOCK */
         .glass-social-dock {
@@ -77,14 +77,6 @@
         }
         .glass-social-dock a { color: #1d1d1f; font-size: 1.3rem; opacity: 0.6; transition: 0.3s; }
         .glass-social-dock a:hover { opacity: 1; transform: translateY(-3px); color: var(--nine-works-blue); }
-
-        #back-to-top { 
-            position: fixed; bottom: 2.5rem; right: 2.5rem; width: 3.5rem; height: 3.5rem; 
-            background: white; color: #1d1d1f; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; cursor: pointer; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); opacity: 0; visibility: hidden; transition: 0.4s; z-index: 90; border: 1px solid #eee;
-        }
-        #back-to-top.visible { opacity: 1; visibility: visible; }
 
         #sticky-header { transition: 0.4s; transform: translateY(-100%); background: white; border-bottom: 1px solid #eee; z-index: 100; position: fixed; top: 0; width: 100%; padding: 1rem; }
         #sticky-header.visible { transform: translateY(0); }
@@ -135,7 +127,7 @@
         <a href="https://www.threads.net/@9workstheatrical" target="_blank"><i class="fab fa-threads"></i></a>
     </div>
 
-    <div id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fas fa-arrow-up"></i></div>
+    <div id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"></div>
 
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbxqLYJf6NWT3uHYHKNW18qTeC2llRZrxpQv2-MpKGizMGfeFWagzGMD-NAaOU4VdB9j/exec';
@@ -147,10 +139,8 @@
 
         async function init() {
             try {
-                document.getElementById('progress-bar').style.width = "40%";
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                document.getElementById('progress-bar').style.width = "100%";
                 
                 const shows = data.shows || [];
                 const current = shows.filter(s => getVal(s, 'Type').toLowerCase().includes('current'));
@@ -161,10 +151,10 @@
                     document.getElementById('now-playing-section').classList.remove('hidden');
                     document.getElementById('hero-content').innerHTML = current.map(s => `
                         <div class="mb-20" data-aos="zoom-in">
-                            <div class="poster-frame hero-poster mb-10"><img src="${getVal(s, 'Poster')}"></div>
+                            <div class="poster-frame max-w-[480px] mb-10"><img src="${getVal(s, 'Poster')}"></div>
                             <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-4">${getVal(s, 'Title')}</h1>
                             <p class="text-[var(--nine-works-blue)] text-xl font-bold uppercase tracking-widest">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
-                            <div class="show-description italic px-6">${getVal(s, 'Description')}</div>
+                            <p class="show-description italic px-6 mx-auto">${getVal(s, 'Description')}</p>
                             <div class="mt-10"><a href="https://ticket2me.net" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
                         </div>`).join('');
                 }
@@ -173,16 +163,16 @@
                     document.getElementById('coming-soon-section').classList.remove('hidden');
                     document.getElementById('coming-soon-grid').innerHTML = coming.map(s => `
                         <div class="text-center w-full md:w-[calc(50%-2rem)] max-w-2xl" data-aos="fade-up">
-                            <div class="poster-frame coming-poster mb-6"><img src="${getVal(s, 'Poster')}"></div>
+                            <div class="poster-frame max-w-[380px] mb-6"><img src="${getVal(s, 'Poster')}"></div>
                             <h4 class="font-bold text-3xl mb-2">${getVal(s, 'Title')}</h4>
-                            <p class="text-[var(--nine-works-blue)] text-sm font-black uppercase tracking-widest">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
-                            <div class="show-description text-sm px-4">${getVal(s, 'Description')}</div>
+                            <p class="text-[var(--nine-works-blue)] text-sm font-black uppercase tracking-widest mb-4">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
+                            <p class="show-description text-sm px-4 mx-auto">${getVal(s, 'Description')}</p>
                         </div>`).join('');
                 }
 
                 document.getElementById('archive-grid').innerHTML = past.map(s => `
                     <div class="text-center" data-aos="fade-up">
-                        <div class="poster-frame past-poster mb-6"><img src="${getVal(s, 'Poster')}"></div>
+                        <div class="poster-frame max-w-[280px] mb-6"><img src="${getVal(s, 'Poster')}"></div>
                         <h4 class="font-bold text-lg">${getVal(s, 'Title')}</h4>
                         <p class="text-zinc-400 text-xs font-bold uppercase mt-2">${getVal(s, 'Year')}</p>
                     </div>`).join('');
@@ -197,19 +187,15 @@
                         </div>`).join('');
                 }
 
+                document.getElementById('loader').style.opacity = '0';
                 setTimeout(() => {
-                    document.getElementById('loader').style.opacity = '0';
-                    setTimeout(() => {
-                        document.getElementById('loader').style.display = 'none';
-                        document.getElementById('main-content').classList.remove('opacity-0');
-                        AOS.init({ once: true, duration: 800 });
-                    }, 600);
-                }, 400);
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('main-content').classList.remove('opacity-0');
+                    AOS.init({ once: true, duration: 800 });
+                }, 600);
 
             } catch (err) { 
                 console.error(err);
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('main-content').classList.remove('opacity-0');
             }
         }
         window.onload = init;
