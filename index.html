@@ -36,7 +36,24 @@
         }
         .aos-animate .show-description { opacity: 1; transform: translateY(0); }
 
-        /* THE TEAM - ULTIMATE CENTERING FIX */
+        /* THE TEAM - ULTIMATE CENTERING & MOBILE FIX */
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .team-member {
+            width: 100%; /* Default mobile behavior */
+            max-width: 280px;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .team-member { width: calc(25% - 2rem); } /* 4 per row on desktop */
+        }
         .team-circle { 
             width: 12rem; height: 12rem; margin: 0 auto 1.5rem; border-radius: 50%; 
             overflow: hidden; background: #f8fafc; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
@@ -45,7 +62,7 @@
         .team-circle img { 
             width: 100%; height: 100%; 
             object-fit: cover; 
-            object-position: center 15%; /* Nudges portraits so heads aren't cut off */
+            object-position: center 12%; /* Optimized for Robbie/Toff portraits */
             filter: grayscale(100%); transition: 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); 
         }
         .team-circle:hover img { filter: grayscale(0%); transform: scale(1.08); }
@@ -104,7 +121,7 @@
 
         <section id="team-section" class="py-32 bg-zinc-50 px-6 hidden">
             <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-20">The Team</h2>
-            <div id="team-grid" class="flex flex-wrap justify-center gap-y-16 gap-x-12 max-w-7xl mx-auto"></div>
+            <div id="team-grid" class="team-container"></div>
         </section>
         
         <footer class="py-32 text-center pb-48">
@@ -173,10 +190,10 @@
                 if (data.team && data.team.length > 0) {
                     document.getElementById('team-section').classList.remove('hidden');
                     document.getElementById('team-grid').innerHTML = data.team.map(p => `
-                        <div class="text-center w-[calc(50%-1.5rem)] md:w-[calc(25%-3rem)]" data-aos="fade-up">
+                        <div class="team-member" data-aos="fade-up">
                             <div class="team-circle"><img src="${getVal(p, 'Photo')}"></div>
                             <h4 class="font-bold text-xl leading-tight">${getVal(p, 'Name')}</h4>
-                            <p class="text-[var(--nine-works-blue)] text-[11px] font-black uppercase tracking-widest mt-3 leading-relaxed">${getVal(p, 'Role')}</p>
+                            <p class="text-[var(--nine-works-blue)] text-[11px] font-black uppercase tracking-widest mt-3 leading-relaxed px-4">${getVal(p, 'Role')}</p>
                         </div>`).join('');
                 }
 
