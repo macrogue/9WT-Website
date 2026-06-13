@@ -42,7 +42,7 @@
         .poster-frame { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); border-radius: 2rem; overflow: hidden; background: #f8fafc; aspect-ratio: 2/3; margin: 0 auto; }
         .poster-frame img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* THE TEAM - CENTERING FIX */
+        /* THE TEAM */
         .team-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
         .team-member { width: 100%; max-width: 280px; display: flex; flex-direction: column; align-items: center; text-align: center; }
         @media (min-width: 768px) { .team-member { width: calc(25% - 2rem); } }
@@ -139,7 +139,7 @@
                             <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-4">${getVal(s, 'Title')}</h1>
                             <p class="text-[var(--nine-works-blue)] text-xl font-bold uppercase tracking-widest">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
                             <p class="max-w-[700px] italic px-6 mx-auto mt-6 text-zinc-600 text-lg leading-relaxed">${getVal(s, 'Description')}</p>
-                            <div class="mt-10"><a href="https://ticket2me.net" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
+                            <div class="mt-10"><a href="https://ticket2me.net/event/22944" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
                         </div>`).join('');
                 }
 
