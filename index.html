@@ -54,8 +54,53 @@
         }
 
         /* POSTERS */
-        .poster-frame { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); border-radius: 2rem; overflow: hidden; background: #f8fafc; aspect-ratio: 2/3; margin: 0 auto; }
-        .poster-frame img { width: 100%; height: 100%; object-fit: contain; }
+        .poster-frame { 
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); 
+            border-radius: 2rem; 
+            overflow: hidden; 
+            background: #f8fafc; 
+            aspect-ratio: 2/3; 
+            margin: 0 auto; 
+            position: relative;
+            cursor: pointer;
+        }
+        .poster-frame img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            transition: filter 0.4s ease, transform 0.4s ease; 
+        }
+
+        /* INTERACTIVE BLUR & OVERLAY ON TAP/CLICK */
+        .poster-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(3, 21, 45, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.25rem;
+            text-align: center;
+            color: #ffffff;
+            border-radius: 2rem;
+            z-index: 10;
+        }
+
+        .poster-frame.active img {
+            filter: blur(8px) brightness(0.4);
+            transform: scale(1.05);
+        }
+
+        .poster-frame.active .poster-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
 
         /* THE TEAM */
         .team-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
@@ -130,9 +175,10 @@
             <div id="coming-soon-grid" class="flex flex-wrap justify-center gap-12"></div>
         </section>
 
-        <!-- PAST SHOWS (REVERSED ORDER: RECENT FIRST) -->
+        <!-- PAST SHOWS (REVERSED ORDER WITH TAP/CLICK DETAILS OVERLAY) -->
         <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
-            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Past Shows</h2>
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-4">Past Shows</h2>
+            <p class="text-center text-zinc-400 text-sm mb-16">Tap or click any poster for show details</p>
             <div id="archive-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
         </section>
 
@@ -158,6 +204,15 @@
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbxqLYJf6NWT3uHYHKNW18qTeC2llRZrxpQv2-MpKGizMGfeFWagzGMD-NAaOU4VdB9j/exec';
         function getVal(obj, keyName) { const foundKey = Object.keys(obj || {}).find(k => k.trim().toLowerCase() === keyName.toLowerCase()); return foundKey ? String(obj[foundKey]).trim() : ""; }
+
+        function togglePoster(frameElement) {
+            // Close all other active poster overlays
+            document.querySelectorAll('.poster-frame.active').forEach(el => {
+                if (el !== frameElement) el.classList.remove('active');
+            });
+            // Toggle clicked element
+            frameElement.classList.toggle('active');
+        }
 
         async function init() {
             try {
@@ -193,14 +248,26 @@
                         </div>`).join('');
                 }
 
-                // REVERSED ORDER: RECENT SHOWS FIRST
+                // REVERSED ORDER WITH BLUR OVERLAY
                 const reversedPast = [...past].reverse();
-                document.getElementById('archive-grid').innerHTML = reversedPast.map(s => `
+                document.getElementById('archive-grid').innerHTML = reversedPast.map(s => {
+                    const desc = getVal(s, 'Description');
+                    const formattedDesc = desc ? desc.replace(/\|/g, '<br>') : 'Details coming soon.';
+                    return `
                     <div class="text-center" data-aos="fade-up">
-                        <div class="poster-frame max-w-[280px] mb-6"><img src="${getVal(s, 'Poster')}"></div>
+                        <div class="poster-frame max-w-[280px] mb-6" onclick="togglePoster(this)">
+                            <img src="${getVal(s, 'Poster')}">
+                            <div class="poster-overlay">
+                                <h5 class="font-extrabold text-base md:text-lg mb-3 text-blue-300">${getVal(s, 'Title')}</h5>
+                                <div class="text-xs md:text-sm text-slate-100 font-medium leading-relaxed overflow-y-auto max-h-[85%]">
+                                    ${formattedDesc}
+                                </div>
+                            </div>
+                        </div>
                         <h4 class="font-bold text-lg leading-tight px-2">${getVal(s, 'Title')}</h4>
                         <p class="text-zinc-400 text-xs font-bold uppercase mt-2">${getVal(s, 'Year')}</p>
-                    </div>`).join('');
+                    </div>`;
+                }).join('');
 
                 if (data.team && data.team.length > 0) {
                     document.getElementById('team-section').classList.remove('hidden');
