@@ -42,16 +42,15 @@
         .progress-container { width: 220px; height: 4px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: var(--nine-works-blue); transition: width 0.4s ease; }
 
-        /* HERO CURTAIN TEASER BACKDROP */
+        /* CLEAN DARK BLUE CURTAIN BACKDROP */
         .curtain-hero {
-            background: linear-gradient(180deg, rgba(2, 6, 23, 0.82) 0%, rgba(0, 84, 166, 0.65) 100%), 
-                        url('https://9workstheatrical.com/images/og-preview.jpg') center/cover no-repeat;
-            min-height: 85vh;
+            background: radial-gradient(circle at center, #0054a6 0%, #03152d 70%, #010814 100%);
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 4rem 1.5rem;
         }
 
         /* POSTERS */
@@ -108,21 +107,21 @@
             <div id="hero-content"></div>
         </section>
 
-        <!-- INTERMISSION TEASER HERO (FALLBACK WHEN NO CURRENT SHOWS) -->
-        <section id="teaser-hero" class="curtain-hero px-6 text-center hidden">
-            <div class="max-w-4xl mx-auto py-20" data-aos="zoom-in">
-                <span class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs md:text-sm font-black uppercase tracking-widest inline-block mb-8">
-                    Season Celebration
-                </span>
-                <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+        <!-- STREAMLINED TEASER HERO -->
+        <section id="teaser-hero" class="curtain-hero text-center hidden">
+            <div class="max-w-3xl mx-auto" data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8 leading-tight">
                     Thank You for an Unforgettable Season
                 </h1>
-                <p class="text-xl md:text-2xl text-blue-100 font-medium max-w-2xl mx-auto mb-4">
+                
+                <p class="text-xl md:text-2xl text-blue-100 font-medium mb-6 leading-relaxed">
                     <span class="font-bold text-white">Yemaya</span> & <span class="font-bold text-white">On Your Feet!</span> have officially wrapped their runs.
                 </p>
-                <p class="text-base md:text-lg text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed">
-                    To everyone who joined us in the theater, sang along, and shared the magic—thank you. Our <span class="text-white font-bold">2027 Season</span> is currently in preparation.
+
+                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    To everyone who joined us in the theater, sang along, joined the Conga, and shared the magic—thank you! We’re prepping for our <span class="text-white font-bold">2027 season</span>! Get excited!
                 </p>
+
                 <div>
                     <a href="mailto:info@9workstheatrical.com?subject=Your%202027%20Season" 
                        class="bg-white text-[var(--nine-works-blue)] px-10 py-5 rounded-full font-bold text-lg shadow-2xl inline-block hover:scale-105 hover:bg-blue-50 transition-all">
@@ -187,7 +186,6 @@
                             <div class="mt-10"><a href="https://ticket2me.net/event/22944" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
                         </div>`).join('');
                 } else {
-                    // IF NO CURRENT SHOW, SHOW THE TEASER HERO BANNER
                     document.getElementById('teaser-hero').classList.remove('hidden');
                 }
 
