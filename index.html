@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 1. TECHNICAL BASICS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- 2. SOCIAL MEDIA & SEO -->
     <title>9 Works Theatrical | Manila's Premiere Theatre Company</title>
     <meta name="title" content="9 Works Theatrical | Manila's Premiere Theatre Company">
     <meta name="description" content="Experience theater excellence in Manila. Discover our upcoming musical productions, cast announcements, and theater updates.">
@@ -20,8 +22,10 @@
     <meta property="twitter:description" content="Experience Broadway in Manila.">
     <meta property="twitter:image" content="https://9workstheatrical.com/images/og-preview.jpg">
 
+    <!-- 3. FAVICON -->
     <link rel="icon" type="image/png" href="https://9workstheatrical.com/images/favicon.png">
 
+    <!-- 4. EXTERNAL SCRIPTS & STYLES -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -37,6 +41,18 @@
         .loader-logo { width: 240px; margin-bottom: 2rem; }
         .progress-container { width: 220px; height: 4px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: var(--nine-works-blue); transition: width 0.4s ease; }
+
+        /* HERO CURTAIN TEASER BACKDROP */
+        .curtain-hero {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.82) 0%, rgba(0, 84, 166, 0.65) 100%), 
+                        url('https://9workstheatrical.com/images/og-preview.jpg') center/cover no-repeat;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
 
         /* POSTERS */
         .poster-frame { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12); border-radius: 2rem; overflow: hidden; background: #f8fafc; aspect-ratio: 2/3; margin: 0 auto; }
@@ -85,21 +101,50 @@
     </header>
 
     <main id="main-content" class="opacity-0 transition-opacity duration-700">
+        
+        <!-- NOW PLAYING SECTION (DYNAMIC VIA SHEET) -->
         <section id="now-playing-section" class="py-32 px-6 hidden text-center">
             <div data-aos="fade-down" class="mb-10"><span class="px-8 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-sm font-black uppercase tracking-widest">Now Playing</span></div>
             <div id="hero-content"></div>
         </section>
 
+        <!-- INTERMISSION TEASER HERO (FALLBACK WHEN NO CURRENT SHOWS) -->
+        <section id="teaser-hero" class="curtain-hero px-6 text-center hidden">
+            <div class="max-w-4xl mx-auto py-20" data-aos="zoom-in">
+                <span class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md text-white border border-white/20 text-xs md:text-sm font-black uppercase tracking-widest inline-block mb-8">
+                    Season Celebration
+                </span>
+                <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Thank You for an Unforgettable Season
+                </h1>
+                <p class="text-xl md:text-2xl text-blue-100 font-medium max-w-2xl mx-auto mb-4">
+                    <span class="font-bold text-white">Yemaya</span> & <span class="font-bold text-white">On Your Feet!</span> have officially wrapped their runs.
+                </p>
+                <p class="text-base md:text-lg text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed">
+                    To everyone who joined us in the theater, sang along, and shared the magic—thank you. Our <span class="text-white font-bold">2027 Season</span> is currently in preparation.
+                </p>
+                <div>
+                    <a href="mailto:info@9workstheatrical.com?subject=Your%202027%20Season" 
+                       class="bg-white text-[var(--nine-works-blue)] px-10 py-5 rounded-full font-bold text-lg shadow-2xl inline-block hover:scale-105 hover:bg-blue-50 transition-all">
+                        Be First to Know (2027 Season) <i class="fas fa-paper-plane ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMING SOON SECTION -->
         <section id="coming-soon-section" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100 hidden">
             <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Coming Soon</h2>
             <div id="coming-soon-grid" class="flex flex-wrap justify-center gap-12"></div>
         </section>
 
+        <!-- PAST SHOWS (REVERSED ORDER: RECENT FIRST) -->
         <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
             <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Past Shows</h2>
             <div id="archive-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
         </section>
 
+        <!-- THE TEAM -->
         <section id="team-section" class="py-32 bg-zinc-50 px-6 hidden">
             <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-20">The Team</h2>
             <div id="team-grid" class="team-container"></div>
@@ -139,8 +184,11 @@
                             <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter mb-4">${getVal(s, 'Title')}</h1>
                             <p class="text-[var(--nine-works-blue)] text-xl font-bold uppercase tracking-widest">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
                             <p class="max-w-[700px] italic px-6 mx-auto mt-6 text-zinc-600 text-lg leading-relaxed">${getVal(s, 'Description')}</p>
-                            <div class="mt-10"><a href="https://premier.ticketworld.com.ph/shows/show.aspx?sh=ONYRFEET26" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
+                            <div class="mt-10"><a href="https://ticket2me.net/event/22944" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
                         </div>`).join('');
+                } else {
+                    // IF NO CURRENT SHOW, SHOW THE TEASER HERO BANNER
+                    document.getElementById('teaser-hero').classList.remove('hidden');
                 }
 
                 if (coming.length > 0) {
@@ -154,7 +202,9 @@
                         </div>`).join('');
                 }
 
-                document.getElementById('archive-grid').innerHTML = past.map(s => `
+                // REVERSED ORDER: RECENT SHOWS FIRST
+                const reversedPast = [...past].reverse();
+                document.getElementById('archive-grid').innerHTML = reversedPast.map(s => `
                     <div class="text-center" data-aos="fade-up">
                         <div class="poster-frame max-w-[280px] mb-6"><img src="${getVal(s, 'Poster')}"></div>
                         <h4 class="font-bold text-lg leading-tight px-2">${getVal(s, 'Title')}</h4>
