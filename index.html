@@ -304,7 +304,7 @@
             document.getElementById('back-to-top').classList.toggle('visible', window.scrollY > 600);
         });
 
-        // AUDITION FORM SUBMISSION HANDLER (URLSearchParams to bypass CORS)
+        // AUDITION FORM SUBMISSION HANDLER
         const auditionForm = document.getElementById("auditionForm");
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
@@ -334,7 +334,7 @@
                 if (data.status === "success") {
                     auditionForm.reset();
                     responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
-                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you! Your assigned slot is:<br><strong class="text-base text-emerald-900 mt-1 inline-block">${data.slot}</strong>`;
+                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you, ${payload.firstName || 'Auditionee'}. Your assigned slot is:<br><strong class="text-base text-emerald-900 mt-1 inline-block">${data.slot}</strong><br><span class="block mt-2 font-semibold text-emerald-900">Please come 30 minutes before your Time Slot.</span>`;
                 } else {
                     throw new Error(data.message || "Something went wrong.");
                 }
