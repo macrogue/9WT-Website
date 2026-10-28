@@ -304,7 +304,7 @@
             document.getElementById('back-to-top').classList.toggle('visible', window.scrollY > 600);
         });
 
-        // AUDITION FORM SUBMISSION HANDLER
+        // AUDITION FORM SUBMISSION HANDLER (URLSearchParams to bypass CORS)
         const auditionForm = document.getElementById("auditionForm");
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
@@ -316,28 +316,31 @@
             submitBtn.innerText = "Registering...";
             responseMsg.className = "hidden";
 
-            const payload = {
-                lastName: document.getElementById("lastName").value.trim(),
-                firstName: document.getElementById("firstName").value.trim(),
-                email: document.getElementById("email").value.trim(),
-                contact: document.getElementById("contact").value.trim()
-            };
+            const formData = new URLSearchParams();
+            formData.append("lastName", document.getElementById("lastName").value.trim());
+            formData.append("firstName", document.getElementById("firstName").value.trim());
+            formData.append("email", document.getElementById("email").value.trim());
+            formData.append("contact", document.getElementById("contact").value.trim());
 
             fetch(AUDITION_API_URL, {
                 method: "POST",
-                body: JSON.stringify(payload)
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: formData.toString()
             })
             .then(res => res.json())
             .then(data => {
                 if (data.status === "success") {
                     auditionForm.reset();
                     responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
-                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you, ${payload.firstName}. Your assigned slot is:<br><strong class="text-base text-emerald-900 mt-1 inline-block">${data.slot}</strong>`;
+                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you! Your assigned slot is:<br><strong class="text-base text-emerald-900 mt-1 inline-block">${data.slot}</strong>`;
                 } else {
                     throw new Error(data.message || "Something went wrong.");
                 }
             })
             .catch(error => {
+                console.error("Submission error:", error);
                 responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
                 responseMsg.innerHTML = "<strong>Error:</strong> Failed to register. Please try again or contact support.";
             })
