@@ -1,3 +1,12 @@
+To achieve this, we will make two updates:
+
+1. Keep the Audition Registration section at the bottom of index.html (right before the team/footer section).
+2. Create a dedicated AuditionForm.html file (or a /AuditionForm folder containing an index.html) so visitors accessing [9workstheatrical.com/AuditionForm](https://9workstheatrical.com/AuditionForm) land directly on a clean, standalone registration page.
+
+Step 1: Updated index.html (Auditions placed near the bottom)
+
+Here is your updated main index.html file with the registration section placed right before The Team section:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,17 +50,6 @@
         .loader-logo { width: 240px; margin-bottom: 2rem; }
         .progress-container { width: 220px; height: 4px; background: #f1f5f9; border-radius: 10px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: var(--nine-works-blue); transition: width 0.4s ease; }
-
-        /* CLEAN DARK BLUE CURTAIN BACKDROP */
-        .curtain-hero {
-            background: radial-gradient(circle at center, #0054a6 0%, #03152d 70%, #010814 100%);
-            min-height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            padding: 4rem 1.5rem;
-        }
 
         /* POSTERS */
         .poster-frame { 
@@ -155,24 +153,20 @@
             <div id="hero-content"></div>
         </section>
 
-        <!-- STREAMLINED TEASER HERO -->
-        <section id="teaser-hero" class="curtain-hero text-center hidden">
-            <div class="max-w-3xl mx-auto" data-aos="fade-up">
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8 leading-tight">
-                    Thank You for an Unforgettable Season
-                </h1>
-                
-                <p class="text-xl md:text-2xl text-blue-100 font-medium mb-6 leading-relaxed">
-                    <span class="font-bold text-white">Yemaya</span> & <span class="font-bold text-white">On Your Feet!</span> have officially wrapped their runs.
-                </p>
-
-                <p class="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-                    To everyone who joined us in the theater, sang along, joined the Conga, and shared the magic—thank you! We’re prepping for our <span class="text-white font-bold">2027 season</span>! Get excited! Click on the links below to visit our Socials.
-                </p>
-            </div>
+        <!-- COMING SOON SECTION -->
+        <section id="coming-soon-section" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100 hidden">
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Coming Soon</h2>
+            <div id="coming-soon-grid" class="flex flex-wrap justify-center gap-12"></div>
         </section>
 
-        <!-- AUDITIONS REGISTRATION SECTION -->
+        <!-- PAST SHOWS (REVERSED ORDER WITH TAP/CLICK DETAILS OVERLAY) -->
+        <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
+            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-4">Past Shows</h2>
+            <p class="text-center text-zinc-400 text-sm mb-16">Tap or click any poster for show details</p>
+            <div id="archive-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
+        </section>
+
+        <!-- AUDITIONS REGISTRATION SECTION (PLACED AT THE BOTTOM) -->
         <section id="auditions-section" class="py-24 px-6 max-w-3xl mx-auto border-t border-zinc-100">
             <div class="text-center mb-12" data-aos="fade-up">
                 <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Join Our Cast</span>
@@ -209,19 +203,6 @@
                 <!-- Confirmation Message Box -->
                 <div id="responseMessage" class="hidden mt-6 p-5 rounded-xl text-center text-sm font-medium"></div>
             </div>
-        </section>
-
-        <!-- COMING SOON SECTION -->
-        <section id="coming-soon-section" class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100 hidden">
-            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-16">Coming Soon</h2>
-            <div id="coming-soon-grid" class="flex flex-wrap justify-center gap-12"></div>
-        </section>
-
-        <!-- PAST SHOWS (REVERSED ORDER WITH TAP/CLICK DETAILS OVERLAY) -->
-        <section class="py-24 px-6 max-w-7xl mx-auto border-t border-zinc-100">
-            <h2 class="text-center text-4xl font-extrabold text-[var(--nine-works-blue)] mb-4">Past Shows</h2>
-            <p class="text-center text-zinc-400 text-sm mb-16">Tap or click any poster for show details</p>
-            <div id="archive-grid" class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
         </section>
 
         <!-- THE TEAM -->
@@ -273,8 +254,6 @@
                             <p class="max-w-[700px] italic px-6 mx-auto mt-6 text-zinc-600 text-lg leading-relaxed">${getVal(s, 'Description')}</p>
                             <div class="mt-10"><a href="https://ticket2me.net/event/22944" target="_blank" class="bg-[var(--nine-works-blue)] text-white px-14 py-5 rounded-full font-bold text-xl shadow-2xl inline-block hover:scale-105 transition-transform">Buy Tickets</a></div>
                         </div>`).join('');
-                } else {
-                    document.getElementById('teaser-hero').classList.remove('hidden');
                 }
 
                 if (coming.length > 0) {
@@ -333,6 +312,140 @@
         });
 
         // AUDITION FORM SUBMISSION HANDLER
+        const auditionForm = document.getElementById("auditionForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const responseMsg = document.getElementById("responseMessage");
+
+        auditionForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Registering...";
+            responseMsg.className = "hidden";
+
+            const payload = {
+                lastName: document.getElementById("lastName").value.trim(),
+                firstName: document.getElementById("firstName").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                contact: document.getElementById("contact").value.trim()
+            };
+
+            fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === "success") {
+                    auditionForm.reset();
+                    responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
+                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you, ${payload.firstName}. Your assigned slot is:<br><strong class="text-base text-emerald-900 mt-1 inline-block">${data.slot}</strong>`;
+                } else {
+                    throw new Error(data.message || "Something went wrong.");
+                }
+            })
+            .catch(error => {
+                responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
+                responseMsg.innerHTML = "<strong>Error:</strong> Failed to register. Please try again or contact support.";
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Register for Auditions";
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+Step 2: Dedicated Standalone Page for [9workstheatrical.com/AuditionForm](https://9workstheatrical.com/AuditionForm)
+
+To make [9workstheatrical.com/AuditionForm](https://9workstheatrical.com/AuditionForm) work smoothly:
+
+1. Create a folder named AuditionForm on your web server root directory.
+2. Inside that folder, save the file below as index.html (or if your host supports clean URLs without folders, name it AuditionForm.html).
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audition Registration | 9 Works Theatrical</title>
+    <link rel="icon" type="image/png" href="https://9workstheatrical.com/images/favicon.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        :root { --nine-works-blue: #0054a6; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1d1d1f; margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-between; }
+        
+        .glass-social-dock { position: fixed; bottom: 2.5rem; left: 50%; transform: translateX(-50%); background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 999px; padding: 0.8rem 2.2rem; display: flex; gap: 2.2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.1); z-index: 100; }
+        .glass-social-dock a { color: #1d1d1f; font-size: 1.3rem; opacity: 0.6; transition: 0.3s; }
+        .glass-social-dock a:hover { opacity: 1; transform: translateY(-3px); color: var(--nine-works-blue); }
+    </style>
+</head>
+<body class="py-12 px-6">
+
+    <!-- HEADER LOGO -->
+    <header class="text-center mb-8">
+        <a href="https://9workstheatrical.com">
+            <img src="https://drive.google.com/thumbnail?id=1P6GlMPvfrKxeZdelIfjHhY378yYHA9bz&sz=w300" class="w-32 mx-auto hover:opacity-80 transition-opacity">
+        </a>
+    </header>
+
+    <!-- FORM CONTAINER -->
+    <main class="max-w-2xl mx-auto w-full my-auto">
+        <div class="text-center mb-8">
+            <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Join Our Cast</span>
+            <h1 class="text-4xl font-extrabold text-[var(--nine-works-blue)] mt-4 mb-3">Audition Registration</h1>
+            <p class="text-zinc-500 text-sm max-w-md mx-auto">Fill out your details below to securely register and automatically receive your audition queue slot.</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-slate-100">
+            <form id="auditionForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="lastName" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Last Name *</label>
+                        <input type="text" id="lastName" name="lastName" required placeholder="Doe" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                    <div>
+                        <label for="firstName" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">First Name *</label>
+                        <input type="text" id="firstName" name="firstName" required placeholder="Jane" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="email" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="jane.doe@example.com" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                </div>
+
+                <div class="mb-8">
+                    <label for="contact" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Contact Number *</label>
+                    <input type="tel" id="contact" name="contact" required placeholder="+63 917 123 4567" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-4 bg-[var(--nine-works-blue)] text-white rounded-xl font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all cursor-pointer">Register for Auditions</button>
+            </form>
+
+            <div id="responseMessage" class="hidden mt-6 p-5 rounded-xl text-center text-sm font-medium"></div>
+        </div>
+    </main>
+
+    <footer class="text-center mt-12 mb-24">
+        <p class="text-zinc-400 text-xs font-medium">© 2026 9 Works Theatrical. Manila, Philippines.</p>
+    </footer>
+
+    <div class="glass-social-dock">
+        <a href="https://facebook.com/9workstheatrical" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://instagram.com/9workstheatrical" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/@9workstheatrical" target="_blank"><i class="fab fa-threads"></i></a>
+    </div>
+
+    <script>
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwIzXLlOViZugmypgcjo3lYrVFelS6NTflQnkP_1Pd9ghDzfUsOFJa1ozT1H4gUnksRRg/exec';
+
         const auditionForm = document.getElementById("auditionForm");
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
