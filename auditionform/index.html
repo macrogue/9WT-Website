@@ -18,7 +18,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1d1d1f; margin: 0; min-height: 100vh; }
     </style>
 </head>
-<body class="py-12 px-6 flex flex-col justify-between">
+<body class="py-12 px-4 sm:px-6 flex flex-col justify-between">
 
     <header class="text-center mb-8">
         <a href="https://9workstheatrical.com">
@@ -26,40 +26,121 @@
         </a>
     </header>
 
-    <main class="max-w-2xl mx-auto w-full my-auto">
+    <main class="max-w-3xl mx-auto w-full my-auto">
         <div class="text-center mb-8">
-            <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Join Our Cast</span>
+            <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Audition Date: December 1, 2026</span>
             <h1 class="text-3xl md:text-4xl font-extrabold text-[var(--nine-works-blue)] mt-4 mb-2">Audition Registration</h1>
-            <p class="text-zinc-500 text-sm max-w-md mx-auto">Fill out your details below to securely register and receive your queue slot number.</p>
+            <p class="text-zinc-500 text-sm max-w-lg mx-auto">All fields are required. Complete the form below to secure your audition slot. Slots are assigned automatically on a first-come, first-served basis.</p>
         </div>
 
-        <div class="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-slate-100">
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-100">
             <form id="auditionForm">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                
+                <!-- PERSONAL DETAILS -->
+                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Personal Information</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
                         <label for="lastName" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Last Name *</label>
-                        <input type="text" id="lastName" name="lastName" required placeholder="Doe" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                        <input type="text" id="lastName" required placeholder="Dela Cruz" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
                     </div>
                     <div>
                         <label for="firstName" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">First Name *</label>
-                        <input type="text" id="firstName" name="firstName" required placeholder="Jane" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                        <input type="text" id="firstName" required placeholder="Juan" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
                     </div>
                 </div>
 
-                <div class="mb-6">
-                    <label for="email" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Email Address *</label>
-                    <input type="email" id="email" name="email" required placeholder="jane.doe@example.com" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+                    <div>
+                        <label for="dob" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Date of Birth *</label>
+                        <input type="date" id="dob" required class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm text-zinc-700">
+                    </div>
+                    <div>
+                        <label for="age" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Age *</label>
+                        <input type="number" id="age" required min="4" max="99" placeholder="24" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                    <div>
+                        <label for="height" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Height *</label>
+                        <input type="text" id="height" required placeholder="e.g., 5'6&quot; or 168 cm" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                </div>
+
+                <!-- PARENT / GUARDIAN -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                    <div>
+                        <label for="guardianName" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Parent / Guardian Full Name *</label>
+                        <input type="text" id="guardianName" required placeholder="Full Name (or N/A if 18+)" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                    <div>
+                        <label for="relationship" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Relationship *</label>
+                        <input type="text" id="relationship" required placeholder="e.g., Mother, Father (or N/A if 18+)" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                </div>
+
+                <!-- CONTACT DETAILS -->
+                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Contact Information</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label for="email" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Email Address *</label>
+                        <input type="email" id="email" required placeholder="juan.delacruz@example.com" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    </div>
+                    <div>
+                        <label for="contact" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Mobile Number *</label>
+                        <input type="tel" id="contact" required placeholder="09171234567" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                        <p class="text-[11px] text-zinc-400 mt-1">Format: 09XXXXXXXXX or +639XXXXXXXXX</p>
+                    </div>
                 </div>
 
                 <div class="mb-8">
-                    <label for="contact" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Contact Number *</label>
-                    <input type="tel" id="contact" name="contact" required placeholder="09171234567 or +639171234567" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                    <label for="address" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Complete Address *</label>
+                    <input type="text" id="address" required placeholder="Street, Barangay, City" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                </div>
+
+                <!-- BACKGROUND & SCHEDULING -->
+                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Experience & Availability</h2>
+
+                <div class="mb-5">
+                    <label for="experience" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Theatre Experience *</label>
+                    <textarea id="experience" rows="3" required placeholder="List recent stage productions, roles, and companies (or write 'None' if first time)" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"></textarea>
+                </div>
+
+                <div class="mb-5">
+                    <label for="skills" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Special Skills *</label>
+                    <input type="text" id="skills" required placeholder="e.g., Acro/Tumbling, Musical Instruments, Dialects, Gymnastics (or 'None')" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm">
+                </div>
+
+                <div class="mb-8">
+                    <label for="conflicts" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Schedule Conflicts *</label>
+                    <textarea id="conflicts" rows="2" required placeholder="List any known rehearsal or performance date conflicts (or write 'None')" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"></textarea>
+                </div>
+
+                <!-- FILE UPLOADS -->
+                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Documents & Photo</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                    <div>
+                        <label for="cvFile" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">CV / Resume (PDF or Word) *</label>
+                        <input type="file" id="cvFile" required accept=".pdf,.doc,.docx" class="w-full text-xs text-zinc-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-[var(--nine-works-blue)] hover:file:bg-blue-100 cursor-pointer border border-zinc-200 rounded-xl p-1.5">
+                        <p class="text-[11px] text-zinc-400 mt-1">Max file size: 5MB</p>
+                    </div>
+                    <div>
+                        <label for="photoFile" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Headshot Photo (JPG or PNG) *</label>
+                        <input type="file" id="photoFile" required accept="image/jpeg,image/png,image/webp" class="w-full text-xs text-zinc-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-[var(--nine-works-blue)] hover:file:bg-blue-100 cursor-pointer border border-zinc-200 rounded-xl p-1.5">
+                        <p class="text-[11px] text-zinc-400 mt-1">Max file size: 5MB</p>
+                    </div>
                 </div>
 
                 <button type="submit" id="submitBtn" class="w-full py-4 bg-[var(--nine-works-blue)] text-white rounded-xl font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all cursor-pointer">Register for Auditions</button>
             </form>
 
-            <div id="responseMessage" class="hidden mt-6 p-5 rounded-xl text-center text-sm font-medium"></div>
+            <!-- Confirmation / Error Message Box -->
+            <div id="responseMessage" class="hidden mt-6 p-6 rounded-2xl text-center text-sm font-medium"></div>
+
+            <!-- Inquiries / Support Notice -->
+            <div class="mt-8 pt-6 border-t border-zinc-100 text-center text-xs text-zinc-500 leading-relaxed">
+                Have questions or concerns? Text or message <strong class="text-zinc-700">09175545560</strong>, or reach out via <a href="https://m.me/9workstheatrical" target="_blank" class="text-[var(--nine-works-blue)] font-semibold underline hover:text-blue-700">9 Works Theatrical’s Messenger</a>.
+            </div>
         </div>
     </main>
 
@@ -74,52 +155,118 @@
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
 
-        auditionForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+        // Helper to convert File to Base64
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result.split(',')[1]);
+                reader.onerror = error => reject(error);
+            });
+        }
 
-            submitBtn.disabled = true;
-            submitBtn.innerText = "Registering...";
+        auditionForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
             responseMsg.className = "hidden";
 
-            const firstNameVal = document.getElementById("firstName").value.trim();
+            // 1. STRICT PHILIPPINE MOBILE NUMBER VALIDATION
+            const contactRaw = document.getElementById("contact").value.trim().replace(/[\s-]/g, "");
+            const phMobileRegex = /^(09\d{9}|\+639\d{9})$/;
+            if (!phMobileRegex.test(contactRaw)) {
+                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
+                responseMsg.innerHTML = "<strong>Invalid Mobile Number:</strong> Please enter a valid Philippine mobile number (e.g., 09171234567 or +639171234567).";
+                return;
+            }
 
-            const formData = new URLSearchParams();
-            formData.append("lastName", document.getElementById("lastName").value.trim());
-            formData.append("firstName", firstNameVal);
-            formData.append("email", document.getElementById("email").value.trim());
-            formData.append("contact", document.getElementById("contact").value.trim());
+            // 2. FILE SIZE & PRESENCE CHECK (Max 5MB each)
+            const cvFile = document.getElementById("cvFile").files[0];
+            const photoFile = document.getElementById("photoFile").files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
 
-            fetch(AUDITION_API_URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: formData.toString()
-            })
-            .then(res => res.json())
-            .then(data => {
+            if (!cvFile || !photoFile) {
+                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
+                responseMsg.innerHTML = "<strong>Missing Files:</strong> Both your CV/Resume and Headshot Photo are required.";
+                return;
+            }
+
+            if (cvFile.size > maxSize || photoFile.size > maxSize) {
+                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
+                responseMsg.innerHTML = "<strong>File Too Large:</strong> Please ensure both your CV and Headshot are under 5MB each.";
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Uploading & Registering...";
+
+            try {
+                const cvBase64 = await fileToBase64(cvFile);
+                const photoBase64 = await fileToBase64(photoFile);
+
+                const firstNameVal = document.getElementById("firstName").value.trim();
+
+                const payload = {
+                    lastName: document.getElementById("lastName").value.trim(),
+                    firstName: firstNameVal,
+                    age: document.getElementById("age").value.trim(),
+                    height: document.getElementById("height").value.trim(),
+                    dob: document.getElementById("dob").value,
+                    guardianName: document.getElementById("guardianName").value.trim(),
+                    relationship: document.getElementById("relationship").value.trim(),
+                    email: document.getElementById("email").value.trim(),
+                    contact: contactRaw,
+                    address: document.getElementById("address").value.trim(),
+                    experience: document.getElementById("experience").value.trim(),
+                    skills: document.getElementById("skills").value.trim(),
+                    conflicts: document.getElementById("conflicts").value.trim(),
+                    cvData: cvBase64,
+                    cvName: cvFile.name,
+                    cvType: cvFile.type,
+                    photoData: photoBase64,
+                    photoName: photoFile.name,
+                    photoType: photoFile.type
+                };
+
+                const res = await fetch(AUDITION_API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+
                 if (data.status === "success") {
                     auditionForm.reset();
-                    responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
+                    const isWaitlist = data.queueStatus === "Waitlist";
+                    responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
                     
-                    // Bulletproof 3-digit padding:
-                    const rawSlot = data.slot !== undefined ? data.slot : 1;
-                    const paddedSlot = ("000" + rawSlot).slice(-3);
-
-                    responseMsg.innerHTML = `<strong>Registration Successful!</strong><br>Thank you, ${firstNameVal || 'Auditionee'}. Your assigned slot is:<br><strong class="text-2xl text-emerald-900 mt-2 inline-block font-bold">${paddedSlot}</strong><br><span class="block mt-2 font-semibold text-emerald-900">Please come 30 minutes before your Time Slot.</span>`;
+                    responseMsg.innerHTML = `
+                        <strong class="text-base">Registration Successful!</strong><br>
+                        Thank you, ${firstNameVal}. Your Audition Number is:<br>
+                        <strong class="text-3xl text-emerald-900 my-2 inline-block font-extrabold">${data.slot}</strong><br>
+                        <div class="mt-2 p-3 bg-white/80 rounded-xl border border-emerald-100">
+                            <span class="text-xs uppercase tracking-wider text-emerald-700 block">Assigned Schedule</span>
+                            <strong class="text-base text-emerald-950">${data.timeSlot}</strong>
+                        </div>
+                        <span class="block mt-3 font-semibold text-emerald-900">
+                            ${isWaitlist ? "You are currently on our priority waitlist. We will contact you as soon as a slot opens up!" : "Please arrive at least 30 minutes before your assigned Time Slot."}
+                        </span>
+                        <span class="block mt-3 text-xs text-emerald-700">
+                            Questions or concerns? Text/message <strong>09175545560</strong> or <a href="https://m.me/9workstheatrical" target="_blank" class="underline font-bold">9 Works Theatrical’s Messenger</a>.
+                        </span>
+                    `;
+                } else if (data.status === "duplicate") {
+                    responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200";
+                    responseMsg.innerHTML = `<strong>Already Registered:</strong> ${data.message}<br><span class="text-xs mt-1 block">If you need to update your details, please text 09175545560 or message us on Messenger.</span>`;
                 } else {
                     throw new Error(data.message || "Something went wrong.");
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error("Submission error:", error);
-                responseMsg.className = "block mt-6 p-5 rounded-xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
-                responseMsg.innerHTML = "<strong>Error:</strong> Failed to register. Please try again or contact support.";
-            })
-            .finally(() => {
+                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
+                responseMsg.innerHTML = "<strong>Error:</strong> Failed to submit registration. Please try again or message 09175545560 for assistance.";
+            } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Register for Auditions";
-            });
+            }
         });
     </script>
 </body>
