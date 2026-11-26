@@ -149,6 +149,8 @@
     </footer>
 
     <script>
+        const REGISTRATION_ON_HOLD = true;
+        const HOLD_MESSAGE = "Registration is temporarily on hold. Please Check back in a few minutes.";
         const AUDITION_API_URL = 'https://script.google.com/macros/s/AKfycbwIzXLlOViZugmypgcjo3lYrVFelS6NTflQnkP_1Pd9ghDzfUsOFJa1ozT1H4gUnksRRg/exec';
 
         const auditionForm = document.getElementById("auditionForm");
@@ -158,6 +160,13 @@
         auditionForm.addEventListener("submit", async function (e) {
             e.preventDefault();
             responseMsg.className = "hidden";
+
+            if (REGISTRATION_ON_HOLD) {
+                submitBtn.innerText = HOLD_MESSAGE;
+                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200";
+                responseMsg.innerHTML = HOLD_MESSAGE;
+                return;
+            }
 
             // STRICT PHILIPPINE MOBILE NUMBER VALIDATION
             const contactRaw = document.getElementById("contact").value.trim().replace(/[\s-]/g, "");
@@ -234,8 +243,10 @@
                 responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
                 responseMsg.innerHTML = "<strong>Error:</strong> Failed to submit registration. Please try again or message 09175545560 for assistance.";
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "Register for Auditions";
+                if (!REGISTRATION_ON_HOLD) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Register for Auditions";
+                }
             }
         });
     </script>
