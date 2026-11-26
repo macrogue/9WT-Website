@@ -28,7 +28,7 @@
 
     <main class="max-w-3xl mx-auto w-full my-auto">
         <div class="text-center mb-8">
-            <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Audition Date: December 1, 2026</span>
+            <span class="px-6 py-2 rounded-full bg-blue-50 text-[var(--nine-works-blue)] text-xs font-black uppercase tracking-widest">Audition Dates: December 1 &amp; 2, 2026</span>
             <h1 class="text-3xl md:text-4xl font-extrabold text-[var(--nine-works-blue)] mt-4 mb-2">Audition Registration</h1>
             <p class="text-zinc-500 text-sm max-w-lg mx-auto">Complete the form below to secure your audition slot. Slots are assigned automatically on a first-come, first-served basis.</p>
         </div>
@@ -102,7 +102,7 @@
 
                 <div class="mb-5">
                     <label for="experience" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Theatre Experience *</label>
-                    <textarea id="experience" rows="3" required placeholder="List recent stage productions, roles, and companies (or write 'None' if first time)" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"></textarea>
+                    <textarea id="experience" rows="3" required placeholder="List your stage productions, roles, and companies (prior experience required)" class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:border-[var(--nine-works-blue)] focus:ring-2 focus:ring-blue-100 outline-none transition-all text-sm"></textarea>
                 </div>
 
                 <!-- SOCIAL MEDIA ACCOUNTS (Auto-defaults to "None" if left empty) -->
@@ -149,7 +149,7 @@
     </footer>
 
     <script>
-        const REGISTRATION_ON_HOLD = true;
+        const REGISTRATION_ON_HOLD = false;
         const HOLD_MESSAGE = "Registration is temporarily on hold. Please Check back in a few minutes.";
         const AUDITION_API_URL = 'https://script.google.com/macros/s/AKfycbwIzXLlOViZugmypgcjo3lYrVFelS6NTflQnkP_1Pd9ghDzfUsOFJa1ozT1H4gUnksRRg/exec';
 
@@ -169,6 +169,24 @@
             }
         }
 
+        function hasValidExperience(exp) {
+            const cleaned = (exp || "")
+                .toLowerCase()
+                .replace(/[^a-z0-9\s]/g, "")
+                .replace(/\s+/g, " ")
+                .trim();
+
+            if (!cleaned || cleaned.length < 3) return false;
+
+            const invalidPhrases = [
+                "none", "na", "n a", "no", "nil", "nothing", "wala", "walang",
+                "none yet", "no experience", "no theatre experience", "no theater experience",
+                "first time", "first timer", "beginner", "newbie", "zero", "not applicable"
+            ];
+
+            return !invalidPhrases.includes(cleaned);
+        }
+
         applyHoldState();
 
         auditionForm.addEventListener("submit", async function (e) {
@@ -177,6 +195,18 @@
 
             if (REGISTRATION_ON_HOLD) {
                 applyHoldState();
+                return;
+            }
+
+            // THEATRE EXPERIENCE CHECK
+            const experienceVal = document.getElementById("experience").value.trim();
+            if (!hasValidExperience(experienceVal)) {
+                responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200 leading-relaxed";
+                responseMsg.innerHTML = `
+                    <strong class="text-base block mb-1">Experience Requirement</strong>
+                    Thank you for your interest in 9 Works Theatrical! Auditions for this production are currently open only to applicants with prior theatre or performance experience. We warmly encourage you to watch out for our upcoming workshops and future open calls!
+                `;
+                responseMsg.scrollIntoView({ behavior: "smooth", block: "nearest" });
                 return;
             }
 
@@ -206,7 +236,7 @@
                     email: document.getElementById("email").value.trim(),
                     contact: contactRaw,
                     address: document.getElementById("address").value.trim(),
-                    experience: document.getElementById("experience").value.trim(),
+                    experience: experienceVal,
                     instagram: document.getElementById("instagram").value.trim() || "None",
                     facebook: document.getElementById("facebook").value.trim() || "None",
                     tiktok: document.getElementById("tiktok").value.trim() || "None",
@@ -244,6 +274,9 @@
                             Questions or concerns? Text/message <strong>09175545560</strong> or <a href="https://m.me/9workstheatrical" target="_blank" class="underline font-bold">9 Works Theatrical’s Messenger</a>.
                         </span>
                     `;
+                } else if (data.status === "ineligible") {
+                    responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200 leading-relaxed";
+                    responseMsg.innerHTML = `<strong class="text-base block mb-1">Experience Requirement</strong>${data.message}`;
                 } else if (data.status === "duplicate") {
                     responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200";
                     responseMsg.innerHTML = `<strong>Already Registered:</strong> ${data.message}<br><span class="text-xs mt-1 block">If you need to update your details, please text 09175545560 or message us on Messenger.</span>`;
