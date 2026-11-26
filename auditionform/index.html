@@ -134,7 +134,7 @@
                 <button type="submit" id="submitBtn" class="w-full py-4 bg-[var(--nine-works-blue)] text-white rounded-xl font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all cursor-pointer">Register for Auditions</button>
             </form>
 
-            <!-- Confirmation / Error Message Box -->
+            <!-- Confirmation / Error / Hold Message Box -->
             <div id="responseMessage" class="hidden mt-6 p-6 rounded-2xl text-center text-sm font-medium"></div>
 
             <!-- Inquiries / Support Notice -->
@@ -157,14 +157,26 @@
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
 
+        function applyHoldState() {
+            if (REGISTRATION_ON_HOLD) {
+                auditionForm.classList.add("hidden");
+                responseMsg.className = "block p-6 rounded-2xl text-center text-sm font-semibold bg-amber-50 text-amber-900 border border-amber-200";
+                responseMsg.innerHTML = HOLD_MESSAGE;
+            } else {
+                auditionForm.classList.remove("hidden");
+                responseMsg.className = "hidden mt-6 p-6 rounded-2xl text-center text-sm font-medium";
+                responseMsg.innerHTML = "";
+            }
+        }
+
+        applyHoldState();
+
         auditionForm.addEventListener("submit", async function (e) {
             e.preventDefault();
             responseMsg.className = "hidden";
 
             if (REGISTRATION_ON_HOLD) {
-                submitBtn.innerText = HOLD_MESSAGE;
-                responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200";
-                responseMsg.innerHTML = HOLD_MESSAGE;
+                applyHoldState();
                 return;
             }
 
