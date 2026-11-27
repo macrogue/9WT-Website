@@ -34,7 +34,7 @@
         </div>
 
         <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-100">
-            <form id="auditionForm">
+            <form id="auditionForm" class="hidden">
                 
                 <!-- PERSONAL DETAILS -->
                 <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Personal Information</h2>
@@ -98,7 +98,7 @@
                 </div>
 
                 <!-- BACKGROUND & SCHEDULING -->
-                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Experience, Socials & Availability</h2>
+                <h2 class="text-xs font-black uppercase tracking-widest text-[var(--nine-works-blue)] border-b border-zinc-100 pb-2 mb-5">Experience, Socials &amp; Availability</h2>
 
                 <div class="mb-5">
                     <label for="experience" class="block font-semibold text-xs uppercase tracking-wider text-zinc-600 mb-2">Theatre Experience *</label>
@@ -134,8 +134,43 @@
                 <button type="submit" id="submitBtn" class="w-full py-4 bg-[var(--nine-works-blue)] text-white rounded-xl font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all cursor-pointer">Register for Auditions</button>
             </form>
 
-            <!-- Confirmation / Error / Hold Message Box -->
-            <div id="responseMessage" class="hidden mt-6 p-6 rounded-2xl text-center text-sm font-medium"></div>
+            <!-- Closed Notice & Actions -->
+            <div id="closedBox" class="text-center">
+                <div id="responseMessage" class="block p-6 rounded-2xl text-center text-sm font-semibold bg-slate-50 text-zinc-700 border border-slate-200 leading-relaxed">
+                    Registration is currently closed. Watch out for future audition announcements.
+                </div>
+
+                <!-- Back to Main Site Button -->
+                <div class="mt-6">
+                    <a href="https://9workstheatrical.com" class="w-full inline-flex items-center justify-center gap-2 py-4 px-6 bg-[var(--nine-works-blue)] text-white rounded-xl font-bold text-sm tracking-wider uppercase shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all">
+                        <i class="fa-solid fa-arrow-left text-xs"></i>
+                        <span>Back to 9 Works Theatrical</span>
+                    </a>
+                </div>
+
+                <!-- Socials Button Box -->
+                <div class="mt-6 p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                    <p class="text-[11px] font-black uppercase tracking-widest text-[var(--nine-works-blue)] mb-3">Follow 9 Works Theatrical</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <a href="https://www.facebook.com/9workstheatrical" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-slate-200 text-zinc-700 hover:border-[var(--nine-works-blue)] hover:text-[var(--nine-works-blue)] transition-all text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-brands fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </a>
+                        <a href="https://www.instagram.com/9workstheatrical" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-slate-200 text-zinc-700 hover:border-[var(--nine-works-blue)] hover:text-[var(--nine-works-blue)] transition-all text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-brands fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@9workstheatrical" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-slate-200 text-zinc-700 hover:border-[var(--nine-works-blue)] hover:text-[var(--nine-works-blue)] transition-all text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-brands fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </a>
+                        <a href="https://www.youtube.com/@9workstheatrical" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-white border border-slate-200 text-zinc-700 hover:border-[var(--nine-works-blue)] hover:text-[var(--nine-works-blue)] transition-all text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-brands fa-youtube"></i>
+                            <span>YouTube</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <!-- Inquiries / Support Notice -->
             <div class="mt-8 pt-6 border-t border-zinc-100 text-center text-xs text-zinc-500 leading-relaxed">
@@ -149,21 +184,24 @@
     </footer>
 
     <script>
-        const REGISTRATION_ON_HOLD = false;
-        const HOLD_MESSAGE = "Registration is temporarily on hold. Please Check back in a few minutes.";
+        const REGISTRATION_CLOSED = true;
+        const CLOSED_MESSAGE = "Registration is currently closed. Watch out for future audition announcements.";
         const AUDITION_API_URL = 'https://script.google.com/macros/s/AKfycbwIzXLlOViZugmypgcjo3lYrVFelS6NTflQnkP_1Pd9ghDzfUsOFJa1ozT1H4gUnksRRg/exec';
 
         const auditionForm = document.getElementById("auditionForm");
+        const closedBox = document.getElementById("closedBox");
         const submitBtn = document.getElementById("submitBtn");
         const responseMsg = document.getElementById("responseMessage");
 
-        function applyHoldState() {
-            if (REGISTRATION_ON_HOLD) {
+        function applyClosedState() {
+            if (REGISTRATION_CLOSED) {
                 auditionForm.classList.add("hidden");
-                responseMsg.className = "block p-6 rounded-2xl text-center text-sm font-semibold bg-amber-50 text-amber-900 border border-amber-200";
-                responseMsg.innerHTML = HOLD_MESSAGE;
+                closedBox.classList.remove("hidden");
+                responseMsg.className = "block p-6 rounded-2xl text-center text-sm font-semibold bg-slate-50 text-zinc-700 border border-slate-200 leading-relaxed";
+                responseMsg.innerHTML = CLOSED_MESSAGE;
             } else {
                 auditionForm.classList.remove("hidden");
+                closedBox.classList.add("hidden");
                 responseMsg.className = "hidden mt-6 p-6 rounded-2xl text-center text-sm font-medium";
                 responseMsg.innerHTML = "";
             }
@@ -187,20 +225,21 @@
             return !invalidPhrases.includes(cleaned);
         }
 
-        applyHoldState();
+        applyClosedState();
 
         auditionForm.addEventListener("submit", async function (e) {
             e.preventDefault();
             responseMsg.className = "hidden";
 
-            if (REGISTRATION_ON_HOLD) {
-                applyHoldState();
+            if (REGISTRATION_CLOSED) {
+                applyClosedState();
                 return;
             }
 
             // THEATRE EXPERIENCE CHECK
             const experienceVal = document.getElementById("experience").value.trim();
             if (!hasValidExperience(experienceVal)) {
+                closedBox.classList.remove("hidden");
                 responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200 leading-relaxed";
                 responseMsg.innerHTML = `
                     <strong class="text-base block mb-1">Experience Requirement</strong>
@@ -214,6 +253,7 @@
             const contactRaw = document.getElementById("contact").value.trim().replace(/[\s-]/g, "");
             const phMobileRegex = /^(09\d{9}|\+639\d{9})$/;
             if (!phMobileRegex.test(contactRaw)) {
+                closedBox.classList.remove("hidden");
                 responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
                 responseMsg.innerHTML = "<strong>Invalid Mobile Number:</strong> Please enter a valid Philippine mobile number (e.g., 09171234567 or +639171234567).";
                 return;
@@ -254,6 +294,7 @@
                 if (data.status === "success") {
                     auditionForm.reset();
                     const isWaitlist = data.queueStatus === "Waitlist";
+                    closedBox.classList.remove("hidden");
                     responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
                     
                     responseMsg.innerHTML = `
@@ -275,9 +316,11 @@
                         </span>
                     `;
                 } else if (data.status === "ineligible") {
+                    closedBox.classList.remove("hidden");
                     responseMsg.className = "block mt-6 p-6 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200 leading-relaxed";
                     responseMsg.innerHTML = `<strong class="text-base block mb-1">Experience Requirement</strong>${data.message}`;
                 } else if (data.status === "duplicate") {
+                    closedBox.classList.remove("hidden");
                     responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-amber-50 text-amber-900 border border-amber-200";
                     responseMsg.innerHTML = `<strong>Already Registered:</strong> ${data.message}<br><span class="text-xs mt-1 block">If you need to update your details, please text 09175545560 or message us on Messenger.</span>`;
                 } else {
@@ -285,10 +328,11 @@
                 }
             } catch (error) {
                 console.error("Submission error:", error);
+                closedBox.classList.remove("hidden");
                 responseMsg.className = "block mt-6 p-5 rounded-2xl text-center text-sm font-medium bg-rose-50 text-rose-800 border border-rose-200";
                 responseMsg.innerHTML = "<strong>Error:</strong> Failed to submit registration. Please try again or message 09175545560 for assistance.";
             } finally {
-                if (!REGISTRATION_ON_HOLD) {
+                if (!REGISTRATION_CLOSED) {
                     submitBtn.disabled = false;
                     submitBtn.innerText = "Register for Auditions";
                 }
