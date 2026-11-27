@@ -132,9 +132,6 @@
     <header id="sticky-header">
         <div class="max-w-7xl mx-auto flex justify-between items-center px-4">
             <img src="https://drive.google.com/thumbnail?id=1P6GlMPvfrKxeZdelIfjHhY378yYHA9bz&sz=w200" class="w-16 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-            <nav class="hidden md:flex gap-6 text-sm font-semibold text-zinc-600">
-                <a href="/auditionform" class="hover:text-[var(--nine-works-blue)] transition-colors">Register for Auditions</a>
-            </nav>
         </div>
     </header>
 
@@ -208,9 +205,6 @@
                             <p class="text-[var(--nine-works-blue)] text-xl font-bold uppercase tracking-widest">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
                             <p class="max-w-[700px] italic px-6 mx-auto mt-6 text-zinc-600 text-lg leading-relaxed">${getVal(s, 'Description')}</p>
                             <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-                                <a href="/auditionform" class="bg-[var(--nine-works-blue)] text-white px-10 py-5 rounded-full font-bold text-lg shadow-xl inline-block hover:scale-105 transition-transform uppercase tracking-wider">
-                                    <i class="fa-solid fa-user-pen mr-2"></i> Register for Auditions
-                                </a>
                                 <a href="https://ticket2me.net/event/22944" target="_blank" class="bg-zinc-900 text-white px-10 py-5 rounded-full font-bold text-lg shadow-xl inline-block hover:scale-105 transition-transform">
                                     Buy Tickets
                                 </a>
@@ -225,12 +219,7 @@
                             <div class="poster-frame max-w-[380px] mb-6"><img src="${getVal(s, 'Poster')}"></div>
                             <h4 class="font-bold text-3xl mb-2">${getVal(s, 'Title')}</h4>
                             <p class="text-[var(--nine-works-blue)] text-sm font-black uppercase tracking-widest mb-4">${getVal(s, 'Date') || getVal(s, 'Year')}</p>
-                            <p class="max-w-[500px] text-sm px-4 mx-auto text-zinc-500 leading-relaxed mb-6">${getVal(s, 'Description')}</p>
-                            <div>
-                                <a href="/auditionform" class="bg-[var(--nine-works-blue)] text-white px-8 py-4 rounded-full font-bold text-sm shadow-lg inline-block hover:scale-105 transition-transform uppercase tracking-wider">
-                                    <i class="fa-solid fa-user-pen mr-2"></i> Register for Auditions
-                                </a>
-                            </div>
+                            <p class="max-w-[500px] text-sm px-4 mx-auto text-zinc-500 leading-relaxed">${getVal(s, 'Description')}</p>
                         </div>`).join('');
                 }
 
